@@ -38,7 +38,7 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.humanize",
-    "django.contrib.admin",
+    "django.contrib.admin.apps.SimpleAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "health_check",
     "health_check.db",
     "macau",
+    "macau.users",
 ]
 
 
@@ -82,7 +83,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "macau.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
