@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "health_check.db",
     "macau",
     "macau.users",
+    "macau.redirects",
 ]
 
 
