@@ -1,0 +1,77 @@
+[project]
+name = "macau"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "django>=5.2.7",
+    "django-environ>=0.12.0",
+    "django-health-check>=3.20.0",
+    "django-permissions-policy>=4.28.0",
+    "django-stubs-ext>=5.2.7",
+    "whitenoise>=6.11.0",
+]
+
+[dependency-groups]
+dev = [
+    "django-stubs[compatible-mypy]>=5.2.7",
+    "poethepoet>=0.37.0",
+    "ruff>=0.14.2",
+]
+
+[tool.mypy]
+plugins = ["mypy_django_plugin.main"]
+warn_unused_ignores = true
+warn_return_any = true
+show_error_codes = true
+strict_optional = true
+implicit_optional = true
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+check_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "macau.settings"
+
+[tool.poe.env]
+PYFOLDERS = "macau/"
+
+[tool.poe.tasks.lint]
+help = "Run ruff against the project to check for linting errors."
+cmd = "ruff check $PYFOLDERS"
+
+[tool.poe.tasks.format]
+help = "Run ruff against the project to check for linting errors."
+cmd = "ruff format --check $PYFOLDERS"
+
+[tool.poe.tasks.type]
+help = "Run mypy against the project to check for type errors."
+cmd = "python -m mypy $PYFOLDERS"
+
+[tool.poe.tasks.test]
+help = "Run pytest against the project to check for test errors."
+shell = "TEST=true python -m manage test"
+
+[tool.poe.tasks.check]
+help = "Check the project for linting and type errors."
+sequence = ["lint", "type", "format", "test"]
+
+[tool.poe.tasks.fix]
+help = "Check the project for linting and type errors."
+sequence = ["lint-fix", "format-fix"]
+
+[tool.poe.tasks.lint-fix]
+help = "Use ruff to fix any auto-fixable linting errors."
+cmd = "ruff check --fix-only $PYFOLDERS"
+
+[tool.poe.tasks.format-fix]
+help = "Use ruff to fix any auto-fixable linting errors."
+cmd = "ruff format $PYFOLDERS"
+
+[tool.poe.tasks.start]
+help = "Start dev server"
+cmd = "python -m manage runserver"
