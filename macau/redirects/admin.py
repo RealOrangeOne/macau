@@ -1,10 +1,11 @@
 from .models import Redirect
 from macau.admin import admin_site
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _
 from django.utils.html import format_html
 from django.utils.text import Truncator
 from django import forms
+from django.http import HttpRequest
+from copy import deepcopy
 
 
 class RedirectAdminForm(forms.ModelForm):
@@ -41,18 +42,15 @@ class RedirectAdmin(admin.ModelAdmin):
 
     readonly_fields = ["created_at", "modified_at"]
 
-    fieldsets = (
-        (None, {"fields": ("slug", "is_enabled")}),
-        (_("Response"), {"fields": ("destination", "is_permanent")}),
-        (
-            _("Authentication"),
-            {
-                "classes": ["collapse"],
-                "fields": ("basic_auth_username", "basic_auth_password"),
-            },
-        ),
-        (_("Metadata"), {"fields": ("created_at", "modified_at")}),
-    )
+    fieldsets_dict = {
+        None: {"fields": ("slug", "is_enabled")},
+        "Response": {"fields": ("destination", "is_permanent")},
+        "Authentication": {
+            "classes": ["collapse"],
+            "fields": ("basic_auth_username", "basic_auth_password"),
+        },
+        "Metadata": {"fields": ("created_at", "modified_at")},
+    }
 
     @admin.display(description="Destination")
     def view_destination(self, obj: Redirect) -> str:
@@ -62,3 +60,16 @@ class RedirectAdmin(admin.ModelAdmin):
     @admin.display(description="Requires Auth?", boolean=True)
     def view_requires_auth(self, obj: Redirect) -> bool:
         return bool(obj.basic_auth_password)
+
+    def get_fieldsets(self, request: HttpRequest, obj: Redirect | None = None) -> list:
+        if not obj:
+            add_fieldsets: dict = deepcopy(self.fieldsets_dict)
+
+            # Hide metadata, since there won't be any
+            del add_fieldsets["Metadata"]
+
+            # Don't collapse authentication fields
+            add_fieldsets["Authentication"]["classes"].remove("collapse")
+
+            return list(add_fieldsets.items())
+        return list(self.fieldsets_dict.items())

@@ -81,7 +81,7 @@ class RedirectViewTestCase(TestCase):
 
     def test_cant_access_disabled_redirect(self) -> None:
         redirect = Redirect.objects.create(
-            slug="basic",
+            slug="disabled",
             destination="https://example.com",
         )
 
@@ -186,3 +186,28 @@ class RedirectCreateViewTestCase(TestCase):
         self.client.logout()
         response = self.client.get("/https://example.com")
         self.assertEqual(response.status_code, 404)
+
+
+class RedirectAdminTestCase(TestCase):
+    user: User
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.user = User.objects.create_superuser("user", "user@example.com", "password")
+
+    def setUp(self) -> None:
+        self.client.force_login(self.user)
+
+    def test_add_view(self) -> None:
+        response = self.client.get(reverse("admin:redirects_redirect_add"))
+        self.assertEqual(response.status_code, 200)
+
+    def test_change_view(self) -> None:
+        redirect = Redirect.objects.create(
+            slug="disabled",
+            destination="https://example.com",
+        )
+        response = self.client.get(
+            reverse("admin:redirects_redirect_change", args=[redirect.slug])
+        )
+        self.assertEqual(response.status_code, 200)
