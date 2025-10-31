@@ -16,6 +16,7 @@ env = environ.Env(
     SECRET_KEY=(str, "super-secret-key"),
     ALLOWED_HOSTS=(list, ["*"]),
     TEST=(bool, False),
+    ROOT_REDIRECT_URL=(str, ""),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -204,3 +205,5 @@ X_FRAME_OPTIONS = "DENY"
 SECURE_REFERRER_POLICY = "same-origin"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+ROOT_REDIRECT_URL = env("ROOT_REDIRECT_URL")

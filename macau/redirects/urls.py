@@ -2,7 +2,7 @@ from django.urls import path, re_path
 
 from django.core.validators import URLValidator
 
-from .views import HandleRedirectView, RedirectCreateView
+from .views import HandleRedirectView, RedirectCreateView, RootRedirectView
 
 app_name = "redirects"
 
@@ -15,4 +15,5 @@ urlpatterns = [
         RedirectCreateView.as_view(),
         name="create",
     ),
+    path("", RootRedirectView.as_view(), name="index"),
 ]

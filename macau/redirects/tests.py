@@ -1,4 +1,4 @@
-from django.test import TestCase, SimpleTestCase, RequestFactory
+from django.test import TestCase, SimpleTestCase, RequestFactory, override_settings
 from .models import Redirect
 from django.urls import reverse
 from base64 import b64encode
@@ -211,3 +211,28 @@ class RedirectAdminTestCase(TestCase):
             reverse("admin:redirects_redirect_change", args=[redirect.slug])
         )
         self.assertEqual(response.status_code, 200)
+
+
+class RootRedirectViewTestCase(SimpleTestCase):
+    @override_settings(ROOT_REDIRECT_URL="https://example.com")
+    def test_custom_root_redirect_url(self) -> None:
+        response = self.client.get("/")
+        self.assertRedirects(
+            response, "https://example.com", fetch_redirect_response=False
+        )
+        self.assertEqual(response.headers["X-Robots-Tag"], "noindex")
+        self.assertIn("no-cache", response.headers["Cache-Control"])
+
+    @override_settings(ROOT_REDIRECT_URL="admin")
+    def test_redirect_root_to_admin(self) -> None:
+        response = self.client.get("/")
+        self.assertRedirects(
+            response, reverse("admin:index"), fetch_redirect_response=False
+        )
+        self.assertEqual(response.headers["X-Robots-Tag"], "noindex")
+        self.assertIn("no-cache", response.headers["Cache-Control"])
+
+    @override_settings(ROOT_REDIRECT_URL="")
+    def test_no_root_redirect_url(self) -> None:
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 404)

@@ -1,6 +1,6 @@
 from django.views import View
 from django.views.generic import RedirectView
-from django.http import HttpRequest, HttpResponse, Http404
+from django.http import HttpRequest, HttpResponse, HttpResponseBase, Http404
 from django import shortcuts
 from .models import Redirect
 from django.utils.decorators import method_decorator
@@ -11,6 +11,7 @@ from urllib.parse import urlencode
 from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from typing import Any
+from django.conf import settings
 
 
 class HandleRedirectView(View):
@@ -61,3 +62,25 @@ class RedirectCreateView(LoginRequiredMixin, RedirectView):
 
     def handle_no_permission(self) -> None:  # type: ignore[override]
         raise Http404
+
+
+class RootRedirectView(RedirectView):
+    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str:
+        if redirect_url := settings.ROOT_REDIRECT_URL:
+            if redirect_url == "admin":
+                return reverse("admin:index")
+            return redirect_url  # type: ignore[no-any-return]
+        raise Http404
+
+    def dispatch(
+        self, request: HttpRequest, *args: Any, **kwargs: Any
+    ) -> HttpResponseBase:
+        response = super().dispatch(request, *args, **kwargs)
+
+        # Prevent the redirect from being cached
+        add_never_cache_headers(response)
+
+        # Prevent search engines from indexing redirects
+        response.headers["X-Robots-Tag"] = "noindex"
+
+        return response
