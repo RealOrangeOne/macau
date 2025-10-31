@@ -11,8 +11,6 @@ django_stubs_ext.monkeypatch()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-CACHE_DIR = BASE_DIR / ".cache"
-
 env = environ.Env(
     DEBUG=(bool, True),
     SECRET_KEY=(str, "super-secret-key"),
