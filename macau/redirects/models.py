@@ -13,6 +13,10 @@ class Redirect(models.Model):
 
     is_permanent = models.BooleanField(default=False)
 
+    # NB: It's intentional that these are stored as plain-text
+    basic_auth_username = models.CharField(max_length=64, blank=True)
+    basic_auth_password = models.CharField(max_length=64, blank=True)
+
     def __str__(self) -> str:
         return self.slug
 
