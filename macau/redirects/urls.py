@@ -1,11 +1,18 @@
-from django.urls import path
+from django.urls import path, re_path
 
-from .views import RedirectView
+from django.core.validators import URLValidator
+
+from .views import HandleRedirectView, RedirectCreateView
 
 app_name = "redirects"
 
 urlpatterns = [
-    path("<slug:slug>", RedirectView.as_view(), name="redirect"),
+    path("<slug:slug>", HandleRedirectView.as_view(), name="redirect"),
     # Duplicate the URL definition to allow for optional trailing slash
-    path("<slug:slug>/", RedirectView.as_view()),
+    path("<slug:slug>/", HandleRedirectView.as_view()),
+    re_path(
+        f"({URLValidator.regex.pattern})",  # type: ignore[union-attr]
+        RedirectCreateView.as_view(),
+        name="create",
+    ),
 ]

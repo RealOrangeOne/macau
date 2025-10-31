@@ -1,14 +1,19 @@
 from django.views import View
-from django.http import HttpRequest, HttpResponse
+from django.views.generic import RedirectView
+from django.http import HttpRequest, HttpResponse, Http404
 from django import shortcuts
 from .models import Redirect
 from django.utils.decorators import method_decorator
 from django.views.decorators.common import no_append_slash
 from .utils import check_basic_auth
 from django.utils.cache import add_never_cache_headers
+from urllib.parse import urlencode
+from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from typing import Any
 
 
-class RedirectView(View):
+class HandleRedirectView(View):
     def _handle_redirect(
         self, request: HttpRequest, redirect: Redirect
     ) -> HttpResponse:
@@ -42,3 +47,17 @@ class RedirectView(View):
         response.headers["X-Robots-Tag"] = "noindex"
 
         return response
+
+
+class RedirectCreateView(LoginRequiredMixin, RedirectView):
+    http_method_names = ["get"]
+
+    def get_redirect_url(self, url: str, *args: Any, **kwargs: Any) -> str:
+        return (
+            reverse("admin:redirects_redirect_add")
+            + "?"
+            + urlencode({"destination": url})
+        )
+
+    def handle_no_permission(self) -> None:  # type: ignore[override]
+        raise Http404

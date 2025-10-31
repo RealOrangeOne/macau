@@ -4,6 +4,7 @@ from django.urls import reverse
 from base64 import b64encode
 from .utils import check_basic_auth
 from django.http import HttpRequest
+from django.contrib.auth.models import User
 
 
 class RedirectViewTestCase(TestCase):
@@ -158,3 +159,30 @@ class CheckBasicAuthTestCase(SimpleTestCase):
                 "password",
             )
         )
+
+
+class RedirectCreateViewTestCase(TestCase):
+    user: User
+
+    @classmethod
+    def setUpTestData(cls) -> None:
+        cls.user = User.objects.create_superuser("user", "user@example.com", "password")
+
+    def setUp(self) -> None:
+        self.client.force_login(self.user)
+
+    def test_redirect_to_create(self) -> None:
+        response = self.client.get("/https://example.com", follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Add redirect")
+
+        self.assertEqual(
+            response.context["adminform"].form.initial,
+            {"destination": "https://example.com"},
+        )
+
+    def test_unauthenticated(self) -> None:
+        self.client.logout()
+        response = self.client.get("/https://example.com")
+        self.assertEqual(response.status_code, 404)
