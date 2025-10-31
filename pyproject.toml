@@ -10,6 +10,7 @@ dependencies = [
     "django-health-check>=3.20.0",
     "django-permissions-policy>=4.28.0",
     "django-stubs-ext>=5.2.7",
+    "granian>=2.5.6",
     "whitenoise>=6.11.0",
 ]
 
@@ -54,7 +55,8 @@ cmd = "python -m mypy $PYFOLDERS"
 
 [tool.poe.tasks.test]
 help = "Run pytest against the project to check for test errors."
-shell = "TEST=true python -m manage test"
+cmd = "python -m manage test"
+env = {TEST = "true"}
 
 [tool.poe.tasks.check]
 help = "Check the project for linting and type errors."
@@ -75,3 +77,8 @@ cmd = "ruff format $PYFOLDERS"
 [tool.poe.tasks.start]
 help = "Start dev server"
 cmd = "python -m manage runserver"
+
+[tool.poe.tasks.granian]
+help = "Start production server"
+cmd = "granian --interface wsgi macau.wsgi:application"
+env = {DEBUG = "false"}
