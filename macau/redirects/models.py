@@ -4,7 +4,7 @@ from django.urls import reverse
 
 
 class Redirect(models.Model):
-    slug = models.SlugField(_("slug"))
+    slug = models.SlugField(_("slug"), primary_key=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
