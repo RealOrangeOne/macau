@@ -1,11 +1,14 @@
-from .models import Redirect
-from macau.admin import admin_site
+from copy import deepcopy
+
+from django import forms
 from django.contrib import admin
+from django.http import HttpRequest
 from django.utils.html import format_html
 from django.utils.text import Truncator
-from django import forms
-from django.http import HttpRequest
-from copy import deepcopy
+
+from macau.admin import admin_site
+
+from .models import Redirect
 
 
 class RedirectAdminForm(forms.ModelForm):

@@ -1,17 +1,19 @@
-from django.views import View
-from django.views.generic import RedirectView
-from django.http import HttpRequest, HttpResponse, HttpResponseBase, Http404
-from django import shortcuts
-from .models import Redirect
-from django.utils.decorators import method_decorator
-from django.views.decorators.common import no_append_slash
-from .utils import check_basic_auth
-from django.utils.cache import add_never_cache_headers
-from urllib.parse import urlencode
-from django.urls import reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from typing import Any
+from urllib.parse import urlencode
+
+from django import shortcuts
 from django.conf import settings
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404, HttpRequest, HttpResponse, HttpResponseBase
+from django.urls import reverse
+from django.utils.cache import add_never_cache_headers
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.views.decorators.common import no_append_slash
+from django.views.generic import RedirectView
+
+from .models import Redirect
+from .utils import check_basic_auth
 
 
 class HandleRedirectView(View):

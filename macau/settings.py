@@ -4,7 +4,6 @@ from pathlib import Path
 import django_stubs_ext
 import environ
 
-
 django_stubs_ext.monkeypatch()
 
 

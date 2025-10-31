@@ -1,10 +1,12 @@
-from django.test import TestCase, SimpleTestCase, RequestFactory, override_settings
-from .models import Redirect
-from django.urls import reverse
 from base64 import b64encode
-from .utils import check_basic_auth
-from django.http import HttpRequest
+
 from django.contrib.auth.models import User
+from django.http import HttpRequest
+from django.test import RequestFactory, SimpleTestCase, TestCase, override_settings
+from django.urls import reverse
+
+from .models import Redirect
+from .utils import check_basic_auth
 
 
 class RedirectViewTestCase(TestCase):

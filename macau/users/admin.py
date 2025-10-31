@@ -1,12 +1,15 @@
+from typing import Any
+
 from django.contrib import admin
 from django.contrib.auth.admin import (
-    UserAdmin as BaseUserAdmin,
     GroupAdmin as BaseGroupAdmin,
 )
+from django.contrib.auth.admin import (
+    UserAdmin as BaseUserAdmin,
+)
 from django.contrib.auth.models import Group, User
-from django.utils.translation import gettext_lazy as _
 from django.contrib.contenttypes.models import ContentType
-from typing import Any
+from django.utils.translation import gettext_lazy as _
 
 from macau.admin import admin_site
 from macau.redirects.models import Redirect

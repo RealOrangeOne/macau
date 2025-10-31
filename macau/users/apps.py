@@ -1,7 +1,7 @@
-from django.apps import AppConfig
-from django.db.models.signals import pre_save
 from typing import TYPE_CHECKING, Any
 
+from django.apps import AppConfig
+from django.db.models.signals import pre_save
 
 if TYPE_CHECKING:
     from django.contrib.auth.models import User

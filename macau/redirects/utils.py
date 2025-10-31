@@ -1,7 +1,8 @@
-from django.utils.crypto import constant_time_compare
-from django.http import HttpRequest
-from base64 import b64decode
 import binascii
+from base64 import b64decode
+
+from django.http import HttpRequest
+from django.utils.crypto import constant_time_compare
 
 
 def check_basic_auth(request: HttpRequest, username: str, password: str) -> bool:

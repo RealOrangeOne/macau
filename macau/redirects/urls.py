@@ -1,6 +1,5 @@
-from django.urls import path, re_path
-
 from django.core.validators import URLValidator
+from django.urls import path, re_path
 
 from .views import HandleRedirectView, RedirectCreateView, RootRedirectView
 

@@ -38,6 +38,10 @@ ignore_missing_imports = true
 [tool.django-stubs]
 django_settings_module = "macau.settings"
 
+[tool.ruff.lint]
+select = ["E", "F", "I", "W", "N", "B", "A", "C4", "T20", "DJ"]
+ignore = ["E501", "DJ008"]
+
 [tool.poe.env]
 PYFOLDERS = "macau/"
 
