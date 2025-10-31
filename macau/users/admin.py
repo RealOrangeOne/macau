@@ -9,6 +9,7 @@ from django.contrib.contenttypes.models import ContentType
 from typing import Any
 
 from macau.admin import admin_site
+from macau.redirects.models import Redirect
 
 
 @admin.register(User, site=admin_site)
@@ -39,7 +40,7 @@ class GroupAdmin(BaseGroupAdmin):
     ) -> Any:
         if db_field.name == "permissions":
             allowed_content_types = ContentType.objects.get_for_models(
-                User, Group
+                User, Group, Redirect
             ).values()
             qs = kwargs.get("queryset", db_field.remote_field.model.objects)
             kwargs["queryset"] = qs.filter(content_type__in=allowed_content_types)
