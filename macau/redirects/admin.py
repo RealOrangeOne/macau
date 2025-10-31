@@ -28,15 +28,21 @@ class RedirectAdminForm(forms.ModelForm):
 class RedirectAdmin(admin.ModelAdmin):
     form = RedirectAdminForm
 
-    list_display = ["slug", "view_destination", "is_permanent", "view_requires_auth"]
+    list_display = [
+        "slug",
+        "view_destination",
+        "is_enabled",
+        "is_permanent",
+        "view_requires_auth",
+    ]
     search_fields = ["slug", "destination"]
-    list_filter = ["is_permanent"]
+    list_filter = ["is_permanent", "is_enabled"]
     ordering = ["slug"]
 
     readonly_fields = ["created_at", "modified_at"]
 
     fieldsets = (
-        (None, {"fields": ("slug",)}),
+        (None, {"fields": ("slug", "is_enabled")}),
         (_("Response"), {"fields": ("destination", "is_permanent")}),
         (
             _("Authentication"),

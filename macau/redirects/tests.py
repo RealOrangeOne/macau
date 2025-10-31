@@ -76,6 +76,21 @@ class RedirectViewTestCase(TestCase):
         )
         self.assertEqual(response.status_code, 401)
 
+    def test_cant_access_disabled_redirect(self) -> None:
+        redirect = Redirect.objects.create(
+            slug="basic",
+            destination="https://example.com",
+        )
+
+        response = self.client.get(reverse("redirects:redirect", args=[redirect.slug]))
+        self.assertEqual(response.status_code, 307)
+
+        redirect.is_enabled = False
+        redirect.save()
+
+        response = self.client.get(reverse("redirects:redirect", args=[redirect.slug]))
+        self.assertEqual(response.status_code, 404)
+
 
 class CheckBasicAuthTestCase(SimpleTestCase):
     def setUp(self) -> None:

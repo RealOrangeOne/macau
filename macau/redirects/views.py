@@ -10,7 +10,7 @@ from .utils import check_basic_auth
 class RedirectView(View):
     @method_decorator(no_append_slash)
     def dispatch(self, request: HttpRequest, slug: str) -> HttpResponse:
-        redirect = shortcuts.get_object_or_404(Redirect, slug=slug)
+        redirect = shortcuts.get_object_or_404(Redirect, slug=slug, is_enabled=True)
 
         if redirect.basic_auth_password:
             if not check_basic_auth(
