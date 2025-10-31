@@ -19,6 +19,8 @@ class RedirectViewTestCase(TestCase):
 
         self.assertEqual(response.status_code, 307)
         self.assertEqual(response.headers["Location"], redirect.destination)
+        self.assertEqual(response.headers["X-Robots-Tag"], "noindex")
+        self.assertIn("no-cache", response.headers["Cache-Control"])
 
     def test_trailing_slash_optional(self) -> None:
         redirect = Redirect.objects.create(
