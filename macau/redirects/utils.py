@@ -18,7 +18,7 @@ def check_basic_auth(request: HttpRequest, username: str, password: str) -> bool
             provided_credentials = b64decode(authentication_tuple[1].strip()).split(
                 b":", 1
             )
-        except UnicodeDecodeError, binascii.Error:
+        except (UnicodeDecodeError, binascii.Error):
             return False
 
         if len(provided_credentials) != 2:
