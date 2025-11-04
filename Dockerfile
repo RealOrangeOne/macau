@@ -55,4 +55,4 @@ ENV PATH=/venv/bin:$PATH \
 
 RUN SECRET_KEY=none python manage.py collectstatic --noinput --clear
 
-CMD ["granian", "macau.wsgi:application"]
+CMD ["bash", "-c", "./manage.py migrate && granian macau.wsgi:application"]
