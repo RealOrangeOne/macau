@@ -86,25 +86,21 @@ WSGI_APPLICATION = "macau.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-db_init_command = f"""
-PRAGMA journal_mode=WAL;
-PRAGMA synchronous=NORMAL;
-PRAGMA temp_store=MEMORY;
-PRAGMA auto_vacuum=INCREMENTAL;
-PRAGMA busy_timeout=10000;
-PRAGMA threads={os.cpu_count()};
-PRAGMA secure_delete=OFF;
-PRAGMA mmap_size=50000000;
-PRAGMA cache_size=-262144;
-"""
+DATABASES = {"default": env.db_url(default="sqlite:///" + str(BASE_DIR / "db.sqlite3"))}
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-        "OPTIONS": {"init_command": db_init_command},
-    },
-}
+if "sqlite" in DATABASES["default"]["ENGINE"]:
+    db_init_command = f"""
+    PRAGMA journal_mode=WAL;
+    PRAGMA synchronous=NORMAL;
+    PRAGMA temp_store=MEMORY;
+    PRAGMA auto_vacuum=INCREMENTAL;
+    PRAGMA busy_timeout=10000;
+    PRAGMA threads={os.cpu_count()};
+    PRAGMA secure_delete=OFF;
+    PRAGMA mmap_size=50000000;
+    PRAGMA cache_size=-262144;
+    """
+    DATABASES["default"]["OPTIONS"] = {"init_command": db_init_command}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
