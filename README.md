@@ -39,3 +39,7 @@ Configuration is done through environment variables.
 - `ROOT_REDIRECT_URL`: The URL to redirect `/` to. By default, the root URL will 404.
 
 The web server used is `granian` which has its own [environment variables](https://github.com/emmett-framework/granian/#options).
+
+## Another?
+
+Yes, I made _another_ URL shortener. URL shorteners are fairly easy to build, and this means I can add all the features I want. If you like these features too, or want an easy path to contribute or suggest them, this might be the project for you.
