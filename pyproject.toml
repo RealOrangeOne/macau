@@ -85,7 +85,7 @@ cmd = "python -m manage runserver"
 
 [tool.poe.tasks.collectstatic]
 help = "Collect static files"
-cmd = "python -m manage collectstatic"
+cmd = "python -m manage collectstatic --noinput"
 
 [tool.poe.tasks.granian]
 help = "Start production server"
