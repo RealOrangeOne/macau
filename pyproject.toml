@@ -65,7 +65,7 @@ env = {TEST = "true"}
 
 [tool.poe.tasks.check]
 help = "Check the project for linting and type errors."
-sequence = ["lint", "type", "format", "test"]
+sequence = ["lint", "type", "format", "collectstatic", "test"]
 
 [tool.poe.tasks.fix]
 help = "Check the project for linting and type errors."
@@ -82,6 +82,10 @@ cmd = "ruff format $PYFOLDERS"
 [tool.poe.tasks.start]
 help = "Start dev server"
 cmd = "python -m manage runserver"
+
+[tool.poe.tasks.collectstatic]
+help = "Collect static files"
+cmd = "python -m manage collectstatic"
 
 [tool.poe.tasks.granian]
 help = "Start production server"
