@@ -36,8 +36,7 @@ class RedirectAdmin(admin.ModelAdmin):
         "slug",
         "view_destination",
         "is_enabled",
-        "is_permanent",
-        "view_requires_auth",
+        "created_at",
     ]
     search_fields = ["slug", "destination"]
     list_filter = ["is_permanent", "is_enabled"]
@@ -59,10 +58,6 @@ class RedirectAdmin(admin.ModelAdmin):
     def view_destination(self, obj: Redirect) -> str:
         truncated_url = Truncator(obj.destination).chars(50)
         return format_html("<a href='{}'>{}</a>", obj.destination, truncated_url)
-
-    @admin.display(description="Requires Auth?", boolean=True)
-    def view_requires_auth(self, obj: Redirect) -> bool:
-        return bool(obj.basic_auth_password)
 
     def get_fieldsets(self, request: HttpRequest, obj: Redirect | None = None) -> list:
         if not obj:
