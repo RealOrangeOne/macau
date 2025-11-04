@@ -38,6 +38,7 @@ Configuration is done through environment variables.
 - `SECRET_KEY` (required): Set to a secret value. [Generate](https://realorangeone.github.io/django-secret-key-generator/).
 - `ALLOWED_HOSTS`: A list of hostnames to restrict which URLs the application will serve. By default this is unrestricted.
 - `ROOT_REDIRECT_URL`: The URL to redirect `/` to, or `"admin"` to redirect to the admin interface. By default, the root URL will 404.
+- `TZ`: Timezone to use (eg `Europe/London`)
 
 The web server used is `granian` which has its own [environment variables](https://github.com/emmett-framework/granian/#options).
 

@@ -16,6 +16,7 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, ["*"]),
     TEST=(bool, False),
     ROOT_REDIRECT_URL=(str, ""),
+    TZ=(str, "UTC"),
 )
 
 # Quick-start development settings - unsuitable for production
@@ -107,7 +108,7 @@ if "sqlite" in DATABASES["default"]["ENGINE"]:
 
 LANGUAGE_CODE = "en-gb"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = env("TZ")
 
 USE_I18N = False
 
