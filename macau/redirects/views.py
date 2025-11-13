@@ -4,7 +4,14 @@ from urllib.parse import urlencode
 from django import shortcuts
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import Http404, HttpRequest, HttpResponse, HttpResponseBase
+from django.http import (
+    Http404,
+    HttpRequest,
+    HttpResponse,
+    HttpResponseBase,
+    HttpResponsePermanentRedirect,
+    HttpResponseRedirect,
+)
 from django.urls import reverse
 from django.utils.cache import add_never_cache_headers
 from django.utils.decorators import method_decorator
@@ -31,11 +38,13 @@ class HandleRedirectView(View):
                     content_type="text/plain",
                 )
 
-        return shortcuts.redirect(
-            redirect.destination,
-            permanent=redirect.is_permanent,
-            preserve_request=True,
+        redirect_class = (
+            HttpResponsePermanentRedirect
+            if redirect.is_permanent
+            else HttpResponseRedirect
         )
+
+        return redirect_class(redirect.destination, preserve_request=True)
 
     @method_decorator(no_append_slash)
     def dispatch(self, request: HttpRequest, slug: str) -> HttpResponse:
