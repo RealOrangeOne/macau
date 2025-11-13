@@ -40,6 +40,6 @@ ENV PATH=/venv/bin:$PATH \
     GRANIAN_BACKPRESSURE=100 \
     GRANIAN_LOG_ACCESS_ENABLED=true
 
-RUN SECRET_KEY=none python manage.py collectstatic --noinput --clear
+RUN SECRET_KEY= python manage.py collectstatic --noinput --clear
 
 CMD ["bash", "-c", "./manage.py migrate && granian macau.wsgi:application"]
