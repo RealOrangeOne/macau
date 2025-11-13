@@ -1,17 +1,5 @@
 FROM python:3.14-slim AS build
 
-ENV DEBIAN_FRONTEND=noninteractive
-
-RUN <<EOT
-apt-get update -qy
-apt-get install -qyy \
-    -o APT::Install-Recommends=false \
-    -o APT::Install-Suggests=false \
-    build-essential \
-    ca-certificates \
-    git
-EOT
-
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /usr/local/bin/uv
 
 ENV UV_LINK_MODE=copy \
