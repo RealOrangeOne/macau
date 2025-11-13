@@ -9,24 +9,25 @@ def check_basic_auth(request: HttpRequest, username: str, password: str) -> bool
     for authentication in request.headers.get("Authorization", "").split(","):
         authentication_tuple = authentication.split(" ", 1)
         if len(authentication_tuple) != 2:
-            return False
+            continue
 
         if "basic" != authentication_tuple[0].lower():
-            return False
+            continue
 
         try:
             provided_credentials = b64decode(authentication_tuple[1].strip()).split(
                 b":", 1
             )
         except (UnicodeDecodeError, binascii.Error):
-            return False
+            continue
 
         if len(provided_credentials) != 2:
-            return False
+            continue
 
         username_valid = constant_time_compare(provided_credentials[0], username)
         password_valid = constant_time_compare(provided_credentials[1], password)
 
-        return username_valid and password_valid
+        if username_valid and password_valid:
+            return True
 
     return False

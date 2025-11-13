@@ -10,6 +10,20 @@ from .utils import check_basic_auth
 
 
 class RedirectViewTestCase(TestCase):
+    def test_absolute_url(self) -> None:
+        redirect = Redirect.objects.create(
+            slug="test", destination="https://example.com"
+        )
+
+        response = self.client.get(redirect.get_absolute_url())
+
+        self.assertRedirects(
+            response,
+            redirect.destination,
+            status_code=307,
+            fetch_redirect_response=False,
+        )
+
     def test_accessible(self) -> None:
         redirect = Redirect.objects.create(
             slug="test", destination="https://example.com"
@@ -156,6 +170,18 @@ class CheckBasicAuthTestCase(SimpleTestCase):
                 self.factory.get(
                     "/",
                     headers={"Authorization": "Basic mypassword"},
+                ),
+                "username",
+                "password",
+            )
+        )
+
+    def test_not_basic(self) -> None:
+        self.assertFalse(
+            check_basic_auth(
+                self.factory.get(
+                    "/",
+                    headers={"Authorization": "Bearer mypassword"},
                 ),
                 "username",
                 "password",

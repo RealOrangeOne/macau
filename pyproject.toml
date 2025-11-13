@@ -17,6 +17,7 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "coverage==7.11.3",
     "django-stubs[compatible-mypy]==5.2.7",
     "poethepoet==0.37.0",
     "ruff==0.14.4",
@@ -43,6 +44,12 @@ django_settings_module = "macau.settings"
 select = ["E", "F", "I", "W", "N", "B", "A", "C4", "T20", "DJ"]
 ignore = ["E501", "DJ008"]
 
+[tool.coverage.run]
+source = ["macau"]
+omit = [
+    "macau/wsgi.py"
+]
+
 [tool.poe.env]
 PYFOLDERS = "macau/"
 
@@ -60,7 +67,7 @@ cmd = "python -m mypy $PYFOLDERS"
 
 [tool.poe.tasks.test]
 help = "Run pytest against the project to check for test errors."
-cmd = "python -m manage test"
+shell = "coverage run ./manage.py test && coverage report --fail-under=90"
 env = {TEST = "true"}
 
 [tool.poe.tasks.check]
