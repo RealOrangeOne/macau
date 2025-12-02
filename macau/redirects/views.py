@@ -1,5 +1,4 @@
 from typing import Any
-from urllib.parse import urlencode
 
 from django import shortcuts
 from django.conf import settings
@@ -65,11 +64,7 @@ class RedirectCreateView(LoginRequiredMixin, RedirectView):
     http_method_names = ["get"]
 
     def get_redirect_url(self, url: str, *args: Any, **kwargs: Any) -> str:
-        return (
-            reverse("admin:redirects_redirect_add")
-            + "?"
-            + urlencode({"destination": url})
-        )
+        return reverse("admin:redirects_redirect_add", query={"destination": url})
 
     def handle_no_permission(self) -> None:  # type: ignore[override]
         raise Http404
