@@ -5,6 +5,8 @@ from django.contrib import admin
 from django.http import HttpRequest
 from django.utils.html import format_html
 from django.utils.text import Truncator
+from import_export.admin import ImportExportActionModelAdmin
+from import_export.resources import ModelResource
 
 from macau.admin import admin_site
 
@@ -28,9 +30,17 @@ class RedirectAdminForm(forms.ModelForm):
         return cleaned_data
 
 
+class RedirectResource(ModelResource):
+    class Meta:
+        model = Redirect
+
+
 @admin.register(Redirect, site=admin_site)
-class RedirectAdmin(admin.ModelAdmin):
+class RedirectAdmin(ImportExportActionModelAdmin):
     form = RedirectAdminForm
+
+    resource_classes = [RedirectResource]
+    show_change_form_export = False
 
     list_display = [
         "slug",

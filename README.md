@@ -11,6 +11,7 @@ A simple and efficient URL shortener.
 - Multiple user login, with group permissions management
 - Easily create redirect by prefixing the URL eg (`macau.example.com/https://github.com/realorangeone/macau`)
 - No analytics or tracking of click counts or IP addresses
+- Import / export via multiple formats (CSV, JSON etc)
 
 ## Usage
 
