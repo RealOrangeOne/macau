@@ -36,6 +36,7 @@ ALLOWED_HOSTS = env("ALLOWED_HOSTS")
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.humanize",
+    "macau.core",
     "django.contrib.admin.apps.SimpleAdminConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     "health_check",
     "health_check.db",
     "import_export",
-    "macau",
     "macau.users",
     "macau.redirects",
 ]

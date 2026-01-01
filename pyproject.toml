@@ -13,6 +13,7 @@ dependencies = [
     "django-stubs-ext==5.2.7",
     "granian[pname]==2.5.7",
     "psycopg[binary]==3.2.12",
+    "qrcode[pil]==8.2",
     "whitenoise==6.11.0",
 ]
 

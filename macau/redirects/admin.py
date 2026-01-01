@@ -3,12 +3,13 @@ from copy import deepcopy
 from django import forms
 from django.contrib import admin
 from django.http import HttpRequest
+from django.urls import reverse
 from django.utils.html import format_html
 from django.utils.text import Truncator
 from import_export.admin import ImportExportActionModelAdmin
 from import_export.resources import ModelResource
 
-from macau.admin import admin_site
+from macau.core.admin import admin_site
 
 from .models import Redirect
 
@@ -52,7 +53,7 @@ class RedirectAdmin(ImportExportActionModelAdmin):
     list_filter = ["is_permanent", "is_enabled"]
     ordering = ["slug"]
 
-    readonly_fields = ["created_at", "modified_at"]
+    readonly_fields = ["created_at", "modified_at", "view_qrcode"]
 
     fieldsets_dict = {
         None: {"fields": ("slug", "is_enabled")},
@@ -61,13 +62,20 @@ class RedirectAdmin(ImportExportActionModelAdmin):
             "classes": ["collapse"],
             "fields": ("basic_auth_username", "basic_auth_password"),
         },
-        "Metadata": {"fields": ("created_at", "modified_at")},
+        "Metadata": {"fields": ("created_at", "modified_at", "view_qrcode")},
     }
 
     @admin.display(description="Destination")
     def view_destination(self, obj: Redirect) -> str:
         truncated_url = Truncator(obj.destination).chars(50)
         return format_html("<a href='{}'>{}</a>", obj.destination, truncated_url)
+
+    @admin.display(description="QR Code")
+    def view_qrcode(self, obj: Redirect) -> str:
+        return format_html(
+            "<img src='{}' class='redirect-qrcode' />",
+            reverse("redirects:qrcode-png", args=[obj.slug]),
+        )
 
     def get_fieldsets(self, request: HttpRequest, obj: Redirect | None = None) -> list:
         if not obj:

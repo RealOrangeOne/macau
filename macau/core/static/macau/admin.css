@@ -1,0 +1,5 @@
+.redirect-qrcode {
+    image-rendering: crisp-edges;
+    width: 25ch;
+    background-color: white;
+}

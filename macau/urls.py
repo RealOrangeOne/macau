@@ -1,6 +1,6 @@
 from django.urls import include, path
 
-from . import admin
+from .core import admin
 
 urlpatterns = [
     path("", include("macau.redirects.urls")),

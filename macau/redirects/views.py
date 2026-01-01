@@ -1,5 +1,7 @@
 from typing import Any
 
+import qrcode
+import qrcode.image.svg
 from django import shortcuts
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,7 +14,7 @@ from django.http import (
     HttpResponseRedirect,
 )
 from django.urls import reverse
-from django.utils.cache import add_never_cache_headers
+from django.utils.cache import add_never_cache_headers, patch_cache_control
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.common import no_append_slash
@@ -89,4 +91,33 @@ class RootRedirectView(RedirectView):
         # Prevent search engines from indexing redirects
         response.headers["X-Robots-Tag"] = "noindex"
 
+        return response
+
+
+class RedirectQRCodeView(View):
+    CONTENT_TYPE = {"svg": "image/svg+xml", "png": "image/png"}
+
+    @method_decorator(no_append_slash)
+    def get(self, request: HttpRequest, slug: str, image_format: str) -> HttpResponse:
+        redirect = shortcuts.get_object_or_404(Redirect, slug=slug, is_enabled=True)
+
+        data = request.build_absolute_uri(redirect.get_absolute_url())
+
+        match image_format:
+            case "png":
+                qr = qrcode.QRCode(border=0, box_size=1)
+                qr.add_data(data)
+                img = qr.make_image(back_color="transparent")
+            case "svg":
+                qr = qrcode.QRCode(
+                    border=0, image_factory=qrcode.image.svg.SvgPathImage
+                )
+                qr.add_data(data)
+                img = qr.make_image(back_color="transparent")
+            case _:
+                return HttpResponse("Unknown format", status=400)
+
+        response = HttpResponse(content_type=self.CONTENT_TYPE[image_format])
+        img.save(response)
+        patch_cache_control(response, max_age=300)
         return response

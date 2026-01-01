@@ -12,6 +12,7 @@ A simple and efficient URL shortener.
 - Easily create redirect by prefixing the URL eg (`macau.example.com/https://github.com/realorangeone/macau`)
 - No analytics or tracking of click counts or IP addresses
 - Import / export via multiple formats (CSV, JSON etc)
+- QR code generation (`/<slug>.svg` or `/<slug>.png`)
 
 ## Usage
 

@@ -264,3 +264,51 @@ class RootRedirectViewTestCase(SimpleTestCase):
     def test_no_root_redirect_url(self) -> None:
         response = self.client.get("/")
         self.assertEqual(response.status_code, 404)
+
+
+class RedirectQRCodeSVGViewTestCase(TestCase):
+    def test_svg(self) -> None:
+        redirect = Redirect.objects.create(
+            slug="test", destination="https://example.com"
+        )
+
+        with self.assertNumQueries(1):
+            response = self.client.get(
+                reverse("redirects:qrcode", args=[redirect.slug])
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "image/svg+xml")
+        self.assertIn(b"<svg", response.content)
+
+    def test_png(self) -> None:
+        redirect = Redirect.objects.create(
+            slug="test", destination="https://example.com"
+        )
+
+        with self.assertNumQueries(1):
+            response = self.client.get(
+                reverse("redirects:qrcode-png", args=[redirect.slug])
+            )
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.headers["Content-Type"], "image/png")
+
+    def test_cant_access_disabled_redirect(self) -> None:
+        redirect = Redirect.objects.create(
+            slug="disabled",
+            destination="https://example.com",
+        )
+
+        response = self.client.get(reverse("redirects:qrcode", args=[redirect.slug]))
+        self.assertEqual(response.status_code, 200)
+
+        redirect.is_enabled = False
+        redirect.save()
+
+        response = self.client.get(reverse("redirects:qrcode", args=[redirect.slug]))
+        self.assertEqual(response.status_code, 404)
+
+    def test_unknown_slug(self) -> None:
+        response = self.client.get(reverse("redirects:qrcode", args=["unknown"]))
+        self.assertEqual(response.status_code, 404)
