@@ -10,7 +10,7 @@ dependencies = [
     "django-health-check==3.20.0",
     "django-import-export>=4.3.14",
     "django-permissions-policy==4.28.0",
-    "django-stubs-ext==5.2.7",
+    "django-stubs-ext==5.2.8",
     "granian[pname]==2.5.7",
     "psycopg[binary]==3.2.12",
     "qrcode[pil]==8.2",
