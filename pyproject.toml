@@ -21,7 +21,7 @@ dependencies = [
 dev = [
     "coverage==7.11.3",
     "django-stubs[compatible-mypy]==5.2.7",
-    "poethepoet==0.37.0",
+    "poethepoet==0.40.0",
     "ruff==0.14.4",
 ]
 
