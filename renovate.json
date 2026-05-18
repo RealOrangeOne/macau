@@ -1,12 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:recommended", "security:only-security-updates"],
+  "extends": ["config:recommended"],
   "packageRules": [
     {
       "matchUpdateTypes": ["major", "minor", "patch"],
       "enabled": true,
-      "schedule": ["every month"],
+      "schedule": ["* */6 * * 6"],
       "minimumReleaseAge": "7d"
     }
-  ]
+  ],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "enabled": true
+  }
 }
