@@ -9,7 +9,7 @@ dependencies = [
     "django-environ==0.12.0",
     "django-health-check==3.20.0",
     "django-import-export>=4.3.14",
-    "django-permissions-policy==4.28.0",
+    "django-permissions-policy==4.32.0",
     "django-stubs-ext==5.2.7",
     "granian[pname]==2.7.4",
     "psycopg[binary]==3.2.12",

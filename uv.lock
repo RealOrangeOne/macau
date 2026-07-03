@@ -127,15 +127,15 @@ wheels = [
 
 [[package]]
 name = "django-permissions-policy"
-version = "4.28.0"
+version = "4.32.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ce/ad/6445c82d70bcac2b9e2b3e42b59553a195c799c63b7187c310a02a775dc2/django_permissions_policy-4.28.0.tar.gz", hash = "sha256:956ce8b08b82efb11ebabe3c5b11a6eb380f44eb543b3a2130adaec5d7fec651", size = 10728, upload-time = "2025-09-18T11:14:49.23Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/49/e0/2ab7350e222fcad1713fd7f40b89e7ed8b9d38a79559ff30a0eac1c2775d/django_permissions_policy-4.32.0.tar.gz", hash = "sha256:a43a465990b36f130f0b61719cdeb1fcedb1b51789ce7c3893179fc53f7e4a4a", size = 14912, upload-time = "2026-06-26T19:53:48.716Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/ac/7c/395dff3ce4a299de2b0f069c2572bc8f20c149066b6c754b2a08486dacf9/django_permissions_policy-4.28.0-py3-none-any.whl", hash = "sha256:bea079be235a7e10325d4eb84cfb97f44e1ee8a1786da0e3f9122c0a0b1e66ec", size = 6773, upload-time = "2025-09-18T11:14:47.481Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/76/8fbdc6b5af9b37e97b785730b8907db50b39054d38d867e2bf1a02071183/django_permissions_policy-4.32.0-py3-none-any.whl", hash = "sha256:8debc44843e096ffaff60a6c8553b2b4163f9a613d3993148002c673ed28e6d3", size = 8641, upload-time = "2026-06-26T19:53:47.615Z" },
 ]
 
 [[package]]
@@ -238,7 +238,7 @@ requires-dist = [
     { name = "django-environ", specifier = "==0.12.0" },
     { name = "django-health-check", specifier = "==3.20.0" },
     { name = "django-import-export", specifier = ">=4.3.14" },
-    { name = "django-permissions-policy", specifier = "==4.28.0" },
+    { name = "django-permissions-policy", specifier = "==4.32.0" },
     { name = "django-stubs-ext", specifier = "==5.2.7" },
     { name = "granian", extras = ["pname"], specifier = "==2.7.4" },
     { name = "psycopg", extras = ["binary"], specifier = "==3.2.12" },
