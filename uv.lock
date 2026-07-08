@@ -250,7 +250,7 @@ requires-dist = [
 dev = [
     { name = "coverage", specifier = "==7.11.3" },
     { name = "django-stubs", extras = ["compatible-mypy"], specifier = "==5.2.7" },
-    { name = "poethepoet", specifier = "==0.37.0" },
+    { name = "poethepoet", specifier = "==0.47.1" },
     { name = "ruff", specifier = "==0.14.4" },
 ]
 
@@ -336,15 +336,15 @@ wheels = [
 
 [[package]]
 name = "poethepoet"
-version = "0.37.0"
+version = "0.47.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pastel" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a5/f2/273fe54a78dc5c6c8dd63db71f5a6ceb95e4648516b5aeaeff4bde804e44/poethepoet-0.37.0.tar.gz", hash = "sha256:73edf458707c674a079baa46802e21455bda3a7f82a408e58c31b9f4fe8e933d", size = 68570, upload-time = "2025-08-11T18:00:29.103Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/08/8c/6e866f2dd70aa3339fd3cdcd16648612a11726ddf0b803f0602885e16bd1/poethepoet-0.47.1.tar.gz", hash = "sha256:bb27f9fbba161c5be11878ad0a6f64ff29b8a68851d1861e4bd30255b753da2a", size = 145618, upload-time = "2026-07-01T07:36:20.922Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/92/1b/5337af1a6a478d25a3e3c56b9b4b42b0a160314e02f4a0498d5322c8dac4/poethepoet-0.37.0-py3-none-any.whl", hash = "sha256:861790276315abcc8df1b4bd60e28c3d48a06db273edd3092f3c94e1a46e5e22", size = 90062, upload-time = "2025-08-11T18:00:27.595Z" },
+    { url = "https://files.pythonhosted.org/packages/45/8f/6518a009dd017ff4c281cb62207bc6741638c93738f08fd27b3caaa1e725/poethepoet-0.47.1-py3-none-any.whl", hash = "sha256:1738b9f6f1dc2c5d61b3e620aa4a2e7b8c20bccef815c8bfb312ebf87464d671", size = 183474, upload-time = "2026-07-01T07:36:19.333Z" },
 ]
 
 [[package]]
