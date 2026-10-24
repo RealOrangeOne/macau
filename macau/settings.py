@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     "django.contrib.staticfiles",
     "health_check",
-    "health_check.db",
     "import_export",
     "macau.users",
     "macau.redirects",

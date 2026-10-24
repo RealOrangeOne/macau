@@ -39,7 +39,7 @@ class UserAdmin(BaseUserAdmin):
 @admin.register(Group, site=admin_site)
 class GroupAdmin(BaseGroupAdmin):
     def formfield_for_manytomany(
-        self, db_field: Any, request: Any, **kwargs: Any
+        self, db_field: Any, request: Any = None, **kwargs: Any
     ) -> Any:
         if db_field.name == "permissions":
             allowed_content_types = ContentType.objects.get_for_models(
